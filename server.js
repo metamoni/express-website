@@ -6,7 +6,7 @@ const FeedbackService = require('./services/FeedbackService');
 const SpeakerService = require('./services/SpeakerService');
 
 const feedbackService = new FeedbackService('./data/feedback.json');
-const speakerService = new SpeakerService('./data/speakers.json');
+const speakersService = new SpeakerService('./data/speakers.json');
 
 const routes = require('./routes');
 
@@ -31,7 +31,7 @@ app.use(express.static(path.join(__dirname, './static')));
 
 app.use(async (req, res, next) => {
   try {
-    const names = await speakerService.getNames();
+    const names = await speakersService.getNames();
     res.locals.speakerNames = names;
     return next();
   } catch (err) {
@@ -43,7 +43,7 @@ app.use(
   '/',
   routes({
     feedbackService,
-    speakerService,
+    speakersService,
   })
 );
 
