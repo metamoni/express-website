@@ -6,16 +6,13 @@ module.exports = params => {
   const { speakersService } = params;
 
   router.get('/', async (req, res) => {
-    try {
-      const speakers = await speakersService.getList();
-      return res.json(speakers);
-    } catch (err) {
-      throw new Error(err.message);
-    }
+    const speakers = await speakersService.getList();
+    res.render('layout', { pageTitle: 'Speakers', template: 'speakers', speakers });
   });
 
-  router.get('/:shortname', (req, res) => {
-    return res.send(`Detail page of ${res.params.shortname}`);
+  router.get('/:shortname', async (req, res) => {
+    const speaker = await speakersService.getSpeaker(req.params.shortname);
+    res.render('layout', { pageTitle: 'Speakers', template: 'speakers-detail', speaker });
   });
 
   return router;
