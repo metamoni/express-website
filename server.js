@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const cookieSession = require('cookie-session');
 const createError = require('http-errors');
+const bodyParser = require('body-parser');
 
 const FeedbackService = require('./services/FeedbackService');
 const SpeakerService = require('./services/SpeakerService');
@@ -22,6 +23,8 @@ app.use(
     keys: ['OjaheRnsshemfnahELF08AEBsjh', 'iajeLSEbdjahwoPEs'],
   })
 );
+
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, './views'));
@@ -48,18 +51,18 @@ app.use(
   })
 );
 
-app.use((request, response, next) => {
+app.use((req, res, next) => {
   return next(createError(404, 'File not found'));
 });
 
-app.use((error, request, response, next) => {
-  response.locals.message = error.message;
+app.use((error, req, res, next) => {
+  res.locals.message = error.message;
   console.error(error);
   const status = error.status || 500;
-  response.locals.status = status;
-  response.status(status);
+  res.locals.status = status;
+  res.status(status);
 
-  response.render('error');
+  res.render('error');
 });
 
 app.listen(port, () => {
