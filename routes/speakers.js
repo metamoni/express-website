@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 
-module.exports = params => {
+module.exports = (params) => {
   const { speakersService } = params;
 
   router.get('/', async (req, res, next) => {
@@ -15,8 +15,8 @@ module.exports = params => {
         speakers,
         artwork,
       });
-    } catch(err) {
-      return next(err);
+    } catch (error) {
+      return next(error);
     }
   });
 
@@ -30,8 +30,8 @@ module.exports = params => {
         speaker,
         artwork,
       });
-    } catch(err) {
-      return next(err);
+    } catch (error) {
+      return next(error);
     }
   });
 

@@ -25,6 +25,7 @@ app.use(
 );
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, './views'));
@@ -38,8 +39,8 @@ app.use(async (req, res, next) => {
     const names = await speakersService.getNames();
     res.locals.speakerNames = names;
     return next();
-  } catch (err) {
-    return next(err);
+  } catch (error) {
+    return next(error);
   }
 });
 
